@@ -1,0 +1,9 @@
+{
+    "total_transactions": 30,
+    "anomalies_detected": 30,
+    "anomaly_rate": 1.0,
+    "unique_addresses_flagged": 2,
+    "avg_anomaly_score": -0.5685962841342677,
+    "min_anomaly_score": -0.6571437643547912,
+    "max_anomaly_score": -0.5318710865984589
+}

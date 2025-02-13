@@ -1,0 +1,76 @@
+{
+  "timestamp": "2025-01-22T02:31:18.316673",
+  "total_tests": 3,
+  "passed_tests": 3,
+  "success_rate": 1.0,
+  "blockchain_info": {
+    "network": "Ganache",
+    "connected": true,
+    "latest_block": 119
+  },
+  "test_cases": [
+    {
+      "test_case": "Valid transaction data",
+      "input": {
+        "name": "John Doe",
+        "address": "123 Main St",
+        "location": "New York"
+      },
+      "expected_status": 200,
+      "actual_status": 200,
+      "response": {
+        "message": "Please confirm the transaction in MetaMask",
+        "status": "pending",
+        "transaction_data": {
+          "chainId": 1337,
+          "data": "0x4e86aa6f000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000000084a6f686e20446f65000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000b313233204d61696e20537400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000084e657720596f726b000000000000000000000000000000000000000000000000",
+          "gas": "2000000",
+          "gasPrice": "2000000000",
+          "to": "0x7635615a00cbC897Bd020468C4338B194C8CC948"
+        }
+      },
+      "blockchain_verification": {
+        "contract_address": "0x7635615a00cbC897Bd020468C4338B194C8CC948",
+        "gas_estimate": "2000000",
+        "chain_id": 1337
+      },
+      "passed": true
+    },
+    {
+      "test_case": "Transaction with XSS attack",
+      "input": {
+        "name": "<script>alert('xss')</script>",
+        "address": "123 Main St",
+        "location": "New York"
+      },
+      "expected_status": 403,
+      "actual_status": 403,
+      "response": {
+        "confidence": 0.96,
+        "error": "Security threat detected - Transaction blocked",
+        "field": "name",
+        "status": "blocked"
+      },
+      "blockchain_verification": null,
+      "passed": true
+    },
+    {
+      "test_case": "Transaction with malicious JavaScript",
+      "input": {
+        "name": "Alice Smith",
+        "address": "javascript:alert(document.cookie)",
+        "location": "London"
+      },
+      "expected_status": 403,
+      "actual_status": 403,
+      "response": {
+        "confidence": 0.95,
+        "error": "Security threat detected - Transaction blocked",
+        "field": "address",
+        "status": "blocked"
+      },
+      "blockchain_verification": null,
+      "passed": true
+    }
+  ]
+}
